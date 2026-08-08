@@ -1,0 +1,13 @@
+{
+  "itemGroup.zzzoom": "Example Mod Tab",
+  "block.zzzoom.example_block": "Example Block",
+  "item.zzzoom.example_item": "Example Item",
+
+  "zzzoom.configuration.title": "Zzzoom Configs",
+  "zzzoom.configuration.section.zzzoom.common.toml": "Zzzoom Configs",
+  "zzzoom.configuration.section.zzzoom.common.toml.title": "Zzzoom Configs",
+  "zzzoom.configuration.items": "Item List",
+  "zzzoom.configuration.logDirtBlock": "Log Dirt Block",
+  "zzzoom.configuration.magicNumberIntroduction": "Magic Number Text",
+  "zzzoom.configuration.magicNumber": "Magic Number"
+}
