@@ -6,6 +6,7 @@ import net.minecraft.util.Mth;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.CalculatePlayerTurnEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
@@ -62,5 +63,14 @@ public class ZoomHandler {
                 Config.MIN_ZOOM_DIVISOR.getAsDouble(),
                 Config.MAX_ZOOM_DIVISOR.getAsDouble());
         event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onCalculatePlayerTurn(CalculatePlayerTurnEvent event) {
+        if (zoomDivisorCurrent <= 1.0 || !Config.SENSITIVITY_REDUCTION_ENABLED.getAsBoolean()) {
+            return;
+        }
+        double scale = (1.0 / zoomDivisorCurrent) * Config.SENSITIVITY_SCALE.getAsDouble();
+        event.setMouseSensitivity(event.getMouseSensitivity() * scale);
     }
 }
