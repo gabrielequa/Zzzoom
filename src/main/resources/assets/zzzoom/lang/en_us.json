@@ -1,13 +1,12 @@
 {
-  "itemGroup.zzzoom": "Example Mod Tab",
-  "block.zzzoom.example_block": "Example Block",
-  "item.zzzoom.example_item": "Example Item",
-
   "zzzoom.configuration.title": "Zzzoom Configs",
-  "zzzoom.configuration.section.zzzoom.common.toml": "Zzzoom Configs",
-  "zzzoom.configuration.section.zzzoom.common.toml.title": "Zzzoom Configs",
-  "zzzoom.configuration.items": "Item List",
-  "zzzoom.configuration.logDirtBlock": "Log Dirt Block",
-  "zzzoom.configuration.magicNumberIntroduction": "Magic Number Text",
-  "zzzoom.configuration.magicNumber": "Magic Number"
+  "zzzoom.configuration.section.zzzoom.client.toml": "Zzzoom Configs",
+  "zzzoom.configuration.section.zzzoom.client.toml.title": "Zzzoom Configs",
+  "zzzoom.configuration.baseZoomDivisor": "Base Zoom Divisor",
+  "zzzoom.configuration.minZoomDivisor": "Minimum Zoom Divisor",
+  "zzzoom.configuration.maxZoomDivisor": "Maximum Zoom Divisor",
+  "zzzoom.configuration.scrollStep": "Scroll Step",
+  "zzzoom.configuration.smoothingFactor": "Smoothing Factor",
+  "zzzoom.configuration.sensitivityReductionEnabled": "Reduce Sensitivity While Zoomed",
+  "zzzoom.configuration.sensitivityScale": "Sensitivity Scale"
 }

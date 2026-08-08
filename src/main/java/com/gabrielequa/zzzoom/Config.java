@@ -1,42 +1,37 @@
 package com.gabrielequa.zzzoom;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
-// Demonstrates how to use Neo's config APIs
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
+    public static final ModConfigSpec.DoubleValue BASE_ZOOM_DIVISOR = BUILDER
+            .comment("FOV divisor applied the moment the zoom key is first pressed, before any scroll adjustment.")
+            .defineInRange("baseZoomDivisor", 4.0, 1.0, 32.0);
 
-    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
+    public static final ModConfigSpec.DoubleValue MIN_ZOOM_DIVISOR = BUILDER
+            .comment("Lowest FOV divisor reachable by scrolling out while zoomed.")
+            .defineInRange("minZoomDivisor", 2.0, 1.0, 32.0);
 
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
+    public static final ModConfigSpec.DoubleValue MAX_ZOOM_DIVISOR = BUILDER
+            .comment("Highest FOV divisor reachable by scrolling in while zoomed.")
+            .defineInRange("maxZoomDivisor", 8.0, 1.0, 32.0);
 
-    // a list of strings that are treated as resource locations for items
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", Config::validateItemName);
+    public static final ModConfigSpec.DoubleValue SCROLL_STEP = BUILDER
+            .comment("How much the FOV divisor changes per scroll notch while zoomed.")
+            .defineInRange("scrollStep", 1.0, 0.1, 10.0);
 
-    static final ModConfigSpec SPEC = BUILDER.build();
+    public static final ModConfigSpec.DoubleValue SMOOTHING_FACTOR = BUILDER
+            .comment("Fraction of the remaining zoom distance closed per tick. Higher is snappier, lower is smoother.")
+            .defineInRange("smoothingFactor", 0.6, 0.01, 1.0);
 
-    private static boolean validateItemName(final Object obj) {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(Identifier.parse(itemName));
-    }
+    public static final ModConfigSpec.BooleanValue SENSITIVITY_REDUCTION_ENABLED = BUILDER
+            .comment("Whether mouse sensitivity is reduced while zoomed.")
+            .define("sensitivityReductionEnabled", true);
+
+    public static final ModConfigSpec.DoubleValue SENSITIVITY_SCALE = BUILDER
+            .comment("Multiplier applied on top of the 1/divisor sensitivity curve while zoomed.")
+            .defineInRange("sensitivityScale", 1.0, 0.1, 5.0);
+
+    public static final ModConfigSpec CLIENT_SPEC = BUILDER.build();
 }
