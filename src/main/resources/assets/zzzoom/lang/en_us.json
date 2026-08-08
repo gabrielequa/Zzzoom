@@ -1,4 +1,7 @@
 {
+  "key.category.zzzoom.zoom": "Zzzoom",
+  "key.zzzoom.zoom": "Zoom",
+
   "zzzoom.configuration.title": "Zzzoom Configs",
   "zzzoom.configuration.section.zzzoom.client.toml": "Zzzoom Configs",
   "zzzoom.configuration.section.zzzoom.client.toml.title": "Zzzoom Configs",
