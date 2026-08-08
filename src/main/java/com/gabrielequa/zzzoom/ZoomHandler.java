@@ -7,6 +7,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import org.lwjgl.glfw.GLFW;
@@ -48,5 +49,18 @@ public class ZoomHandler {
     public static void onComputeFov(ViewportEvent.ComputeFov event) {
         double divisor = Mth.lerp(event.getPartialTick(), zoomDivisorOld, zoomDivisorCurrent);
         event.setFOV((float) (event.getFOV() / divisor));
+    }
+
+    @SubscribeEvent
+    public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
+        if (!ZOOM_KEY.isDown()) {
+            return;
+        }
+        double step = Config.SCROLL_STEP.getAsDouble() * Math.signum(event.getScrollDeltaY());
+        zoomDivisorTarget = Mth.clamp(
+                zoomDivisorTarget + step,
+                Config.MIN_ZOOM_DIVISOR.getAsDouble(),
+                Config.MAX_ZOOM_DIVISOR.getAsDouble());
+        event.setCanceled(true);
     }
 }
