@@ -8,9 +8,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.CalculatePlayerTurnEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.event.ViewportEvent;
 import org.lwjgl.glfw.GLFW;
 
 @EventBusSubscriber(modid = Zzzoom.MODID, value = Dist.CLIENT)
@@ -21,35 +21,35 @@ public class ZoomHandler {
     public static final KeyMapping ZOOM_KEY =
             new KeyMapping("key.zzzoom.zoom", GLFW.GLFW_KEY_C, ZOOM_CATEGORY);
 
+    private static boolean wasKeyDown = false;
+    private static double zoomDivisorTarget = 1.0;
+    private static double zoomDivisorCurrent = 1.0;
+
     @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.registerCategory(ZOOM_CATEGORY);
         event.register(ZOOM_KEY);
     }
 
-    private static boolean wasKeyDown = false;
-    private static double zoomDivisorTarget = 1.0;
-    private static double zoomDivisorOld = 1.0;
-    private static double zoomDivisorCurrent = 1.0;
-
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         boolean isKeyDown = ZOOM_KEY.isDown();
         if (isKeyDown && !wasKeyDown) {
-            zoomDivisorTarget = Config.BASE_ZOOM_DIVISOR.getAsDouble();
+            zoomDivisorTarget = Mth.clamp(
+                    Config.BASE_ZOOM_DIVISOR.getAsDouble(),
+                    Config.MIN_ZOOM_DIVISOR.getAsDouble(),
+                    Config.MAX_ZOOM_DIVISOR.getAsDouble());
         } else if (!isKeyDown) {
             zoomDivisorTarget = 1.0;
         }
         wasKeyDown = isKeyDown;
 
-        zoomDivisorOld = zoomDivisorCurrent;
         zoomDivisorCurrent = Mth.lerp(Config.SMOOTHING_FACTOR.getAsDouble(), zoomDivisorCurrent, zoomDivisorTarget);
     }
 
     @SubscribeEvent
-    public static void onComputeFov(ViewportEvent.ComputeFov event) {
-        double divisor = Mth.lerp(event.getPartialTick(), zoomDivisorOld, zoomDivisorCurrent);
-        event.setFOV((float) (event.getFOV() / divisor));
+    public static void onComputeFovModifier(ComputeFovModifierEvent event) {
+        event.setNewFovModifier((float) (event.getNewFovModifier() / zoomDivisorCurrent));
     }
 
     @SubscribeEvent
