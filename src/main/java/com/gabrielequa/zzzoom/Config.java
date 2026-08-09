@@ -33,5 +33,9 @@ public class Config {
             .comment("Multiplier applied on top of the 1/divisor sensitivity curve while zoomed.")
             .defineInRange("sensitivityScale", 1.0, 0.1, 5.0);
 
+    public static final ModConfigSpec.BooleanValue HIDE_HAND_WHILE_ZOOMED = BUILDER
+            .comment("Whether the held item and bare arm are hidden while the zoom key is held.")
+            .define("hideHandWhileZoomed", true);
+
     public static final ModConfigSpec CLIENT_SPEC = BUILDER.build();
 }

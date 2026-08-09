@@ -11,5 +11,6 @@
   "zzzoom.configuration.scrollStep": "Scroll Step",
   "zzzoom.configuration.smoothingFactor": "Smoothing Factor",
   "zzzoom.configuration.sensitivityReductionEnabled": "Reduce Sensitivity While Zoomed",
-  "zzzoom.configuration.sensitivityScale": "Sensitivity Scale"
+  "zzzoom.configuration.sensitivityScale": "Sensitivity Scale",
+  "zzzoom.configuration.hideHandWhileZoomed": "Hide Hand While Zoomed"
 }

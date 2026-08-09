@@ -38,3 +38,8 @@ run/
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
+
+### Superpowers SDD scratch workspace ###
+.superpowers/
+
+docs/

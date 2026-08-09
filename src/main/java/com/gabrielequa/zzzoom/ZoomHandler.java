@@ -11,6 +11,8 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RenderArmEvent;
+import net.neoforged.neoforge.client.event.RenderHandEvent;
 import org.lwjgl.glfw.GLFW;
 
 @EventBusSubscriber(modid = Zzzoom.MODID, value = Dist.CLIENT)
@@ -72,5 +74,19 @@ public class ZoomHandler {
         }
         double scale = (1.0 / zoomDivisorCurrent) * Config.SENSITIVITY_SCALE.getAsDouble();
         event.setMouseSensitivity(event.getMouseSensitivity() * scale);
+    }
+
+    @SubscribeEvent
+    public static void onRenderHand(RenderHandEvent event) {
+        if (ZOOM_KEY.isDown() && Config.HIDE_HAND_WHILE_ZOOMED.getAsBoolean()) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRenderArm(RenderArmEvent<?> event) {
+        if (ZOOM_KEY.isDown() && Config.HIDE_HAND_WHILE_ZOOMED.getAsBoolean()) {
+            event.setCanceled(true);
+        }
     }
 }
